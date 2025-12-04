@@ -50,10 +50,8 @@ function generate() {
 }
 
 function copyCombo(sku) {
-    const qty = document.getElementById("qty_" + sku).value;
-    const combo = sku + " - " + qty;
-    navigator.clipboard.writeText(combo);
-    alert("Gekopieerd: " + combo);
+    navigator.clipboard.writeText(sku);
+    
 }
 </script>
 </head>
@@ -69,3 +67,4 @@ function copyCombo(sku) {
 
 </body>
 </html>
+
