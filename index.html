@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<title>SKU + Aantal Generator Tool</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+        max-width: 700px;
+    }
+    textarea, input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+    button {
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .sku-item {
+        margin: 8px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+</style>
+<script>
+function generate() {
+    const skuInput = document.getElementById("skuInput").value.trim();
+    const lines = skuInput.split(/\n+/);
+    const container = document.getElementById("output");
+    container.innerHTML = "";
+
+    lines.forEach(sku => {
+        if (!sku) return;
+        const div = document.createElement("div");
+        div.className = "sku-item";
+
+        div.innerHTML = `
+            <strong>${sku}</strong><br>
+            Aantal: <input type="number" id="qty_${sku}" min="1" value="1" style="width:120px"> 
+            <button onclick="copyCombo('${sku}')">Kopieer</button>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+function copyCombo(sku) {
+    const btn = event.target;
+    navigator.clipboard.writeText(sku).then(() => {
+        const original = btn.textContent;
+        btn.textContent = "✓ Gekopieerd";
+        btn.style.color = "green";
+        setTimeout(() => {
+            btn.textContent = original;
+            btn.style.color = "";
+        }, 1200);
+    });
+}
+(sku) {
+    navigator.clipboard.writeText(sku);
+    
+}
+</script>
+</head>
+<body>
+<h2>SKU + Aantal Generator Tool</h2>
+<p>Plak hier je lijst met SKU's. De tool maakt automatisch SKU + Aantal regels met kopieerknoppen.</p>
+
+<textarea id="skuInput" rows="8" placeholder="Plak SKU's hier, één per regel..."></textarea>
+<button onclick="generate()">Genereer</button>
+
+<h3>Output:</h3>
+<div id="output"></div>
+
+</body>
+</html>
